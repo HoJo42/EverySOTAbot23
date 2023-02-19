@@ -24,4 +24,11 @@ public final class Constants {
 
     public static final double SPEED_CONTROL = 0.6;
   }
+  public static class Arm {
+    public static final int ARM_MOTOR_PORT = 4;
+    public static final double ARM_OUTPUT_POWER = 0.4;
+  }
+  public static class Intake {
+    public static final int INTAKE_MOTOR_PORT = 5;
+  }
 }

@@ -4,23 +4,16 @@
 
 package frc.robot.commands;
 
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.Arm;
 
-public class DriveCommand extends CommandBase {
-  private final Drive m_Drive;
-  private final CommandXboxController m_dStick;
+public class lowerArm extends CommandBase {
 
-  /** Creates a new DriveCommand. */
-  public DriveCommand(Drive drive, CommandXboxController dStick) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private final Arm m_Arm;
 
-    m_Drive = drive;
-    m_dStick = dStick;
-
-    addRequirements(drive);
+  /** Creates a new lowerArm. */
+  public lowerArm(Arm arm) {
+    m_Arm = arm;
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +23,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Drive.drive(m_dStick.getLeftY(), m_dStick.getLeftX());
+    m_Arm.lowerArm();
   }
 
   // Called once the command ends or is interrupted.
