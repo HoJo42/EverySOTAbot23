@@ -5,10 +5,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import frc.robot.Constants;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Intake extends SubsystemBase {
   private final CANSparkMax m_intakeMotor;
