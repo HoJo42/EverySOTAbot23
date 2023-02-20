@@ -26,7 +26,8 @@ public class Arm extends SubsystemBase {
     m_armMotor.set(Constants.Arm.ARM_OUTPUT_POWER);
   }
 
-  public void stickArm() {
+  public void stopArm() {
+    m_armMotor.set(0);
   }
 
   @Override
