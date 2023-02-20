@@ -33,7 +33,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem(); //TODO: remove this
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem(); 
   
   private WPI_TalonSRX leftDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT);
   private WPI_TalonSRX leftDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER);
