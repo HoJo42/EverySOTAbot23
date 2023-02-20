@@ -30,5 +30,9 @@ public final class Constants {
   }
   public static class Intake {
     public static final int INTAKE_MOTOR_PORT = 5;
+    public static final double INTAKE_OUTPUT_POWER = 1.0;
+    public static final int INTAKE_CURRENT_LIMIT_A = 25;
+    public static final double INTAKE_HOLD_POWER = 0.07;
+    public static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5;
   }
 }
