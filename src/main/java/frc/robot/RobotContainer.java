@@ -6,16 +6,16 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ControlIntake;
 import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -46,16 +46,17 @@ public class RobotContainer {
   private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
   private CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
-  private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-  private Arm m_Arm = new Arm(arm);
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+
+  private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
+  private Arm m_Arm = new Arm(arm);
+  private Intake m_Intake = new Intake(intake);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
     configureBindings();
     ConfigureDefaultCommands();
   }
@@ -79,6 +80,7 @@ public class RobotContainer {
   private void ConfigureDefaultCommands(){
     m_Drive.setDefaultCommand(new DriveCommand(m_Drive, m_driverController));
     m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController));
+    m_Intake.setDefaultCommand(new ControlIntake(m_Intake, m_driverController));
   }
 
   /**
