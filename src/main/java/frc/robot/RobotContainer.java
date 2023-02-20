@@ -10,6 +10,7 @@ import frc.robot.Constants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -73,13 +74,11 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-
   }
 
   private void ConfigureDefaultCommands(){
     m_Drive.setDefaultCommand(new DriveCommand(m_Drive, m_driverController));
+    m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController));
   }
 
   /**
