@@ -11,19 +11,22 @@ import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
 
-  private CANSparkMax m_arm;
+  private CANSparkMax m_armMotor;
 
   /** Creates a new Arm. */
   public Arm(CANSparkMax arm) {
-    m_arm = arm;
+    m_armMotor = arm;
   }
 
   public void lowerArm(){
-    m_arm.set(-Constants.Arm.ARM_OUTPUT_POWER);
+    m_armMotor.set(-Constants.Arm.ARM_OUTPUT_POWER);
   }
 
   public void raiseArm(){
-    m_arm.set(Constants.Arm.ARM_OUTPUT_POWER);
+    m_armMotor.set(Constants.Arm.ARM_OUTPUT_POWER);
+  }
+
+  public void stickArm() {
   }
 
   @Override
