@@ -20,6 +20,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
@@ -49,13 +50,9 @@ public class RobotContainer {
   private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
   private CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
-  // private AnalogInput armEncoder0 = new AnalogInput(0);
-  // private AnalogInput armEncoder1 = new AnalogInput(1);
-  // private AnalogInput armEncoder2 = new AnalogInput(2);
-  // private AnalogInput armEncoder3 = new AnalogInput(3);
-
-  //private Encoder armEncoder = new Encoder(1, 2, 3);
   private DutyCycleEncoder armEncoder = new DutyCycleEncoder(0); 
+
+  private PIDController armPidController = new PIDController(Constants.Arm.PID_P, Constants.Arm.PID_I, Constants.Arm.PID_D);
 
   
   private final CommandXboxController m_driverController =
