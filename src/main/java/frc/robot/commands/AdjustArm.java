@@ -10,16 +10,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
-public class moveArm extends CommandBase {
+public class AdjustArm extends CommandBase {
   private final Arm m_Arm;
   private final CommandXboxController m_driverController;
-  private final DutyCycleEncoder m_armEncoder;
 
   /** Creates a new moveArm. */
-  public moveArm(Arm arm, CommandXboxController dStick, DutyCycleEncoder armEncoder) {
+  public AdjustArm(Arm arm, CommandXboxController dStick) {
     m_Arm = arm;
     m_driverController = dStick;
-    m_armEncoder = armEncoder;
     addRequirements(m_Arm);
   }
 
@@ -31,12 +29,11 @@ public class moveArm extends CommandBase {
   @Override
   public void execute() {
     if (m_driverController.x().getAsBoolean()){
-      new ArmPID(Constants.Arm.ARM_EXTENDED, m_armEncoder, m_Arm);
+      m_Arm.changeDesired(true);
     }else if (m_driverController.a().getAsBoolean()){
-      m_Arm.lowerArm();
-    }else{
-      m_Arm.stopArm();
+      m_Arm.changeDesired(false);
     }
+    isFinished();
   }
 
   // Called once the command ends or is interrupted.
@@ -46,6 +43,6 @@ public class moveArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

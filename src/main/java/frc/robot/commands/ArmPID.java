@@ -4,32 +4,33 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants.*;
-import frc.robot.subsystems.Arm;;
+import frc.robot.subsystems.Arm;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmPID extends CommandBase {
-  private DutyCycleEncoder m_armEncoder;
-  private Arm m_Arm;
-
-
-
+public class ArmPID extends PIDCommand {
+  
   /** Creates a new ArmPID. */
-  public ArmPID(double setpoint, DutyCycleEncoder encoder, Arm arm) {
-    m_armEncoder = encoder;
-    m_Arm = arm;
-    new PIDCommand(new PIDController(5, 0, 0),
-     () -> m_armEncoder.get(),
-    setpoint,
-    (it) -> m_Arm.setSpeed(it), m_Arm);
+  public ArmPID(PIDController armPID, Arm arm, DutyCycleEncoder armEncoder) {
+    super(
+        // The controller that the command will use
+        armPID,
+        // This should return the measurement
+        () -> armEncoder.get(),
+        // This should return the setpoint (can also be a constant)
+        () -> arm.getDesired(),
+        // This uses the output
+        output -> {
+          arm.setSpeed(MathUtil.clamp(output, -0.5, 0.5));
+        });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+    addRequirements(arm);
   }
 
   // Returns true when the command should end.

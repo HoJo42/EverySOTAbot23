@@ -6,11 +6,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AdjustArm;
+import frc.robot.commands.ArmPID;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ControlIntake;
-import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -60,8 +61,10 @@ public class RobotContainer {
 
 
   private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-  private Arm m_Arm = new Arm(arm, armEncoder);
+  private Arm m_Arm = new Arm(arm, armEncoder, armPidController);
   private Intake m_Intake = new Intake(intake);
+
+  private AdjustArm m_AdjustArm = new AdjustArm(m_Arm, m_driverController);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -85,11 +88,13 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    m_driverController.x().onTrue(m_AdjustArm);
+    m_driverController.b().onTrue(m_AdjustArm);
   }
 
   private void ConfigureDefaultCommands(){
     m_Drive.setDefaultCommand(new DriveCommand(m_Drive, m_driverController));
-    m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController, armEncoder));
+    m_Arm.setDefaultCommand(new ArmPID(armPidController, m_Arm, armEncoder));
     m_Intake.setDefaultCommand(new ControlIntake(m_Intake, m_driverController));
   }
 
