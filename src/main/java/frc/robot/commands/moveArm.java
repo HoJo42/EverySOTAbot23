@@ -4,18 +4,22 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class moveArm extends CommandBase {
   private final Arm m_Arm;
   private final CommandXboxController m_driverController;
+  private final DutyCycleEncoder m_armEncoder;
 
   /** Creates a new moveArm. */
-  public moveArm(Arm arm, CommandXboxController dStick) {
+  public moveArm(Arm arm, CommandXboxController dStick, DutyCycleEncoder armEncoder) {
     m_Arm = arm;
     m_driverController = dStick;
+    m_armEncoder = armEncoder;
     addRequirements(m_Arm);
   }
 
@@ -27,9 +31,11 @@ public class moveArm extends CommandBase {
   @Override
   public void execute() {
     if (m_driverController.x().getAsBoolean()){
-      m_Arm.raiseArm();
+      new ArmPID(Constants.Arm.ARM_EXTENDED, m_armEncoder, m_Arm);
     }else if (m_driverController.a().getAsBoolean()){
       m_Arm.lowerArm();
+    }else{
+      m_Arm.stopArm();
     }
   }
 

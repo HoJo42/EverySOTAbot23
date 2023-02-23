@@ -6,24 +6,48 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Arm extends SubsystemBase {
 
   private CANSparkMax m_armMotor;
+  private DutyCycleEncoder armEncoder;
 
   /** Creates a new Arm. */
-  public Arm(CANSparkMax arm) {
+  public Arm(CANSparkMax arm, DutyCycleEncoder encoder) {
     m_armMotor = arm;
+    armEncoder = encoder;
   }
 
   public void lowerArm(){
-    m_armMotor.set(-Constants.Arm.ARM_OUTPUT_POWER);
+    if (armEncoder.get() > Constants.Arm.ARM_RETRACTED){
+      m_armMotor.set(-Constants.Arm.ARM_OUTPUT_POWER);
+    }else {
+      m_armMotor.set(0);
+    }
   }
 
   public void raiseArm(){
-    m_armMotor.set(Constants.Arm.ARM_OUTPUT_POWER);
+    if (armEncoder.get() < Constants.Arm.ARM_EXTENDED){
+      m_armMotor.set(Constants.Arm.ARM_OUTPUT_POWER);
+    }else {
+      m_armMotor.set(0);
+      
+    }
+  }
+
+  public void setSpeed (double speed){
+    if((speed < 0 && armEncoder.get() > Constants.Arm.ARM_RETRACTED) || 
+    (speed < 0 && armEncoder.get() < Constants.Arm.ARM_EXTENDED)){
+      m_armMotor.set(speed);
+    }else{
+      m_armMotor.set(0);
+    }
   }
 
   public void stopArm() {
@@ -32,6 +56,7 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    SmartDashboard.putNumber("encoder count:", armEncoder.get());
+    SmartDashboard.putNumber("armEncder2", m_armMotor.getEncoder().getPosition());
+    }
 }

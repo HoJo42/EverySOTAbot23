@@ -20,6 +20,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -46,17 +49,27 @@ public class RobotContainer {
   private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
   private CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
+  // private AnalogInput armEncoder0 = new AnalogInput(0);
+  // private AnalogInput armEncoder1 = new AnalogInput(1);
+  // private AnalogInput armEncoder2 = new AnalogInput(2);
+  // private AnalogInput armEncoder3 = new AnalogInput(3);
+
+  //private Encoder armEncoder = new Encoder(1, 2, 3);
+  private DutyCycleEncoder armEncoder = new DutyCycleEncoder(0); 
+
   
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
 
   private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-  private Arm m_Arm = new Arm(arm);
+  private Arm m_Arm = new Arm(arm, armEncoder);
   private Intake m_Intake = new Intake(intake);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    leftDriveMotor.setInverted(true);
+    leftDriveMotorOther.setInverted(true);
     configureBindings();
     ConfigureDefaultCommands();
   }
@@ -79,7 +92,7 @@ public class RobotContainer {
 
   private void ConfigureDefaultCommands(){
     m_Drive.setDefaultCommand(new DriveCommand(m_Drive, m_driverController));
-    m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController));
+    m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController, armEncoder));
     m_Intake.setDefaultCommand(new ControlIntake(m_Intake, m_driverController));
   }
 
