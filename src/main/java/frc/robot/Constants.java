@@ -30,6 +30,10 @@ public final class Constants {//TODO: CHECK MOTOR PORTS BEFORE PUSHING TO ROBOT!
     public static final int ARM_ENCODER_PORT = 4;
     public static final double ARM_EXTENDED = 0.84;
     public static final double ARM_RETRACTED = 0.420;
+
+    public static final double PID_P = 0;
+    public static final double PID_I = 0;
+    public static final double PID_D = 0;
   }
   public static class Intake {
     public static final int INTAKE_MOTOR_PORT = 6;
