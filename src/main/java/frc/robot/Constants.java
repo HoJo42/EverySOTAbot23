@@ -12,7 +12,7 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {//TODO: CHECK MOTOR PORTS BEFORE PUSHING TO ROBOT!!!
+public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
@@ -31,6 +31,7 @@ public final class Constants {//TODO: CHECK MOTOR PORTS BEFORE PUSHING TO ROBOT!
     public static final double ARM_EXTENDED = 0.84;
     public static final double ARM_RETRACTED = 0.420;
 
+    //TODO: tune pid
     public static final double PID_P = 0;
     public static final double PID_I = 0;
     public static final double PID_D = 0;
