@@ -19,12 +19,11 @@ import frc.robot.subsystems.Intake;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -48,7 +47,7 @@ public class RobotContainer {
   private MotorControllerGroup leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
   private MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
 
-  private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
+  private CANSparkMax armMotor = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
   private CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
   private DutyCycleEncoder armEncoder = new DutyCycleEncoder(0); 
@@ -61,7 +60,7 @@ public class RobotContainer {
 
 
   private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-  private Arm m_Arm = new Arm(arm, armEncoder, armPidController);
+  private Arm m_Arm = new Arm(armMotor, armEncoder, armPidController);
   private Intake m_Intake = new Intake(intake);
 
   private AdjustArm m_AdjustArm = new AdjustArm(m_Arm, m_driverController);
@@ -70,6 +69,8 @@ public class RobotContainer {
   public RobotContainer() {
     leftDriveMotor.setInverted(true);
     leftDriveMotorOther.setInverted(true);
+    armMotor.setIdleMode(IdleMode.kBrake);
+    armMotor.setInverted(true);
     configureBindings();
     ConfigureDefaultCommands();
   }
@@ -88,8 +89,8 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    m_driverController.x().onTrue(m_AdjustArm);
-    m_driverController.b().onTrue(m_AdjustArm);
+    m_driverController.x().whileTrue(m_AdjustArm);
+    m_driverController.a().whileTrue(m_AdjustArm);
   }
 
   private void ConfigureDefaultCommands(){

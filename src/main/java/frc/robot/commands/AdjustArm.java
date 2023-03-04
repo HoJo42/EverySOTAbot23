@@ -4,20 +4,21 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 public class AdjustArm extends CommandBase {
   private final Arm m_Arm;
   private final CommandXboxController m_driverController;
+  private int timesRan;
 
   /** Creates a new moveArm. */
   public AdjustArm(Arm arm, CommandXboxController dStick) {
     m_Arm = arm;
     m_driverController = dStick;
+    timesRan = 0;
     addRequirements(m_Arm);
   }
 
@@ -28,12 +29,15 @@ public class AdjustArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    timesRan++;
+    SmartDashboard.putNumber("AdjustArm count:", timesRan);
     if (m_driverController.x().getAsBoolean()){
       m_Arm.changeDesired(true);
     }else if (m_driverController.a().getAsBoolean()){
       m_Arm.changeDesired(false);
+    }else {
+      isFinished();
     }
-    isFinished();
   }
 
   // Called once the command ends or is interrupted.

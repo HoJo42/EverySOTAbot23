@@ -22,19 +22,20 @@ public final class Constants {
     public static final int RIGHT_MOTOR_PORT = 3;
     public static final int RIGHT_MOTOR_PORT_OTHER = 4;
 
-    public static final double SPEED_CONTROL = 0.6;
+    public static final double SPEED_CONTROL = 1;
   }
   public static class Arm {
     public static final int ARM_MOTOR_PORT = 5;
     public static final double ARM_OUTPUT_POWER = 0.4;
     public static final int ARM_ENCODER_PORT = 4;
-    public static final double ARM_EXTENDED = 0.84;
-    public static final double ARM_RETRACTED = 0.420;
+    public static final double ARM_EXTENDED = 0.24;
+    public static final double ARM_RETRACTED = 0.69;
+    public static final double ADJUSTMENT_INCREMENT = 0.05;
 
     //TODO: tune pid
-    public static final double PID_P = 0;
+    public static final double PID_P = 3;
     public static final double PID_I = 0;
-    public static final double PID_D = 0;
+    public static final double PID_D = 0.1;
   }
   public static class Intake {
     public static final int INTAKE_MOTOR_PORT = 6;
@@ -44,11 +45,11 @@ public final class Constants {
     public static final int INTAKE_HOLD_CURRENT_LIMIT_A = 5;
   }
 }
-// ARM EXTENDED: 0.764
-// 0.773
-// 0.776
-// 0.774
-// ARM RETRACTED: 0.41
-// 0.416
-// 0.420
-// 0.416
+// // ARM EXTENDED: 
+//0.246
+//0.231
+//0.232
+// // ARM RETRACTED: 
+//0.69
+//0.687
+//0.696

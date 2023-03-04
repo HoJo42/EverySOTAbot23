@@ -24,10 +24,12 @@ public class Arm extends SubsystemBase {
 
   /** Creates a new Arm. */
   public Arm(CANSparkMax arm, DutyCycleEncoder encoder, PIDController armPID) {
-    DesiredLocation = Constants.Arm.ARM_RETRACTED;
+    
     m_armMotor = arm;
     armEncoder = encoder;
     m_armPID = armPID;
+
+    DesiredLocation = Constants.Arm.ARM_RETRACTED;
   }
 
   public void lowerArm(){
@@ -48,14 +50,25 @@ public class Arm extends SubsystemBase {
   }
 
   public void setSpeed (double speed){
-    m_armMotor.set(speed);
+    SmartDashboard.putNumber("Arm Speed", speed);
+    SmartDashboard.putNumber("desired position", DesiredLocation);
+    if (speed < 0 && armEncoder.get() > Constants.Arm.ARM_EXTENDED){
+      SmartDashboard.putString("First Check", "Passed!");
+      m_armMotor.set(speed);
+    }else if(speed > 0 && armEncoder.get() < Constants.Arm.ARM_RETRACTED){
+      SmartDashboard.putString("Second Check", "Passed!");
+      m_armMotor.set(speed);
+    }else{
+      SmartDashboard.putString("Else", "Failed!");
+      m_armMotor.set(0);
+    }
   }
   
-  public void changeDesired(boolean direction){
-    if (direction && armEncoder.get() < Constants.Arm.ARM_EXTENDED){
-      DesiredLocation += 0.05;
-    }else if(!direction && armEncoder.get() > Constants.Arm.ARM_RETRACTED){
-      DesiredLocation -= 0.05;
+  public void changeDesired(boolean wantUpwards){
+    if (wantUpwards && armEncoder.get() > Constants.Arm.ARM_EXTENDED + Constants.Arm.ADJUSTMENT_INCREMENT){
+      DesiredLocation -= Constants.Arm.ADJUSTMENT_INCREMENT;
+    }else if(!wantUpwards && armEncoder.get() < Constants.Arm.ARM_RETRACTED - Constants.Arm.ADJUSTMENT_INCREMENT){
+      DesiredLocation += Constants.Arm.ADJUSTMENT_INCREMENT;
     }
   }
 
@@ -70,5 +83,10 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("encoder count:", armEncoder.get());
+    if (DesiredLocation < Constants.Arm.ARM_EXTENDED){
+      DesiredLocation = Constants.Arm.ARM_EXTENDED;
+    }else if (DesiredLocation > Constants.Arm.ARM_RETRACTED){
+      DesiredLocation = Constants.Arm.ARM_RETRACTED;
+    }
     }
 }

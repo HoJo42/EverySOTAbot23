@@ -4,9 +4,12 @@
 
 package frc.robot.commands;
 
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Arm;
 
@@ -26,7 +29,8 @@ public class ArmPID extends PIDCommand {
         () -> arm.getDesired(),
         // This uses the output
         output -> {
-          arm.setSpeed(MathUtil.clamp(output, -0.5, 0.5));
+          SmartDashboard.putNumber("Output", output);
+          arm.setSpeed(MathUtil.clamp(output, -.75, .75));
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
