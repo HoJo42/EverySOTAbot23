@@ -36,19 +36,6 @@ public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem(); 
   
-<<<<<<< HEAD
-  private CANSparkMax leftDriveMotor = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
-  private CANSparkMax leftDriveMotorOther = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
-  private CANSparkMax rightDriveMotor = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
-  private CANSparkMax rightDriveMotorOther = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
-
-  private MotorControllerGroup leftDriveMotors;
-  private MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
-
-  private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
-  private CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
-
-  
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
@@ -56,20 +43,6 @@ public class RobotContainer {
   private Drive m_Drive;
   // private Arm m_Arm = new Arm(arm);
   // private Intake m_Intake = new Intake(intake);
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    leftDriveMotor.setInverted(false);
-    leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
-    rightDriveMotors.setInverted(true);
-    m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-=======
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
-  private Drive m_Drive;
-  private Arm m_Arm;
-  private Intake m_Intake;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -89,10 +62,9 @@ public class RobotContainer {
     CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
     
     m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-    m_Arm = new Arm(arm);
-    m_Intake = new Intake(intake);
+    // m_Arm = new Arm(arm);
+    // m_Intake = new Intake(intake);
     
->>>>>>> 4a35b0e (made motor init less goofy)
     configureBindings();
     ConfigureDefaultCommands();
   }
@@ -129,27 +101,5 @@ public class RobotContainer {
     return Autos.exampleAuto(m_exampleSubsystem);
   }
 
-  public MotorControllerGroup getLeftMotors(){
-    return leftDriveMotors;
-  }
-
-  public MotorControllerGroup getRightMotors(){
-    return rightDriveMotors;
-  }
-
-  public CANSparkMax getLeftMotor(){
-    return leftDriveMotor;
-  }
-
-  public CANSparkMax getLeftMotorOther(){
-    return leftDriveMotorOther;
-  }
-
-  public CANSparkMax getRightMotor(){
-    return rightDriveMotor;
-  }
-
-  public CANSparkMax getRightMotorOther(){
-    return rightDriveMotorOther;
-  }
+  
 }
