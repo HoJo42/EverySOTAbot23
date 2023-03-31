@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.Drive;
@@ -29,7 +30,9 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Drive.drive(m_dStick.getLeftY(), m_dStick.getLeftX());
+    m_Drive.sotaTankDrive(m_dStick.getLeftY(), m_dStick.getRightY());
+    SmartDashboard.putNumber("Left Stick:", m_dStick.getLeftY());
+    SmartDashboard.putNumber("Right Stick:", m_dStick.getRightY());
   }
 
   // Called once the command ends or is interrupted.

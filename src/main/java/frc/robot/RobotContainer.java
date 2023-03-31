@@ -5,6 +5,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
@@ -35,12 +36,12 @@ public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem(); 
   
-  private WPI_TalonSRX leftDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT);
-  private WPI_TalonSRX leftDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER);
-  private WPI_TalonSRX rightDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT);
-  private WPI_TalonSRX rightDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER);
+  private CANSparkMax leftDriveMotor = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
+  private CANSparkMax leftDriveMotorOther = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
+  private CANSparkMax rightDriveMotor = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
+  private CANSparkMax rightDriveMotorOther = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
 
-  private MotorControllerGroup leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
+  private MotorControllerGroup leftDriveMotors;
   private MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
 
   private CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
@@ -51,12 +52,16 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
 
-  private Drive m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
-  private Arm m_Arm = new Arm(arm);
-  private Intake m_Intake = new Intake(intake);
+  private Drive m_Drive;
+  // private Arm m_Arm = new Arm(arm);
+  // private Intake m_Intake = new Intake(intake);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    leftDriveMotor.setInverted(false);
+    leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
+    rightDriveMotors.setInverted(true);
+    m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
     configureBindings();
     ConfigureDefaultCommands();
   }
@@ -79,8 +84,8 @@ public class RobotContainer {
 
   private void ConfigureDefaultCommands(){
     m_Drive.setDefaultCommand(new DriveCommand(m_Drive, m_driverController));
-    m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController));
-    m_Intake.setDefaultCommand(new ControlIntake(m_Intake, m_driverController));
+    // m_Arm.setDefaultCommand(new moveArm(m_Arm, m_driverController));
+    // m_Intake.setDefaultCommand(new ControlIntake(m_Intake, m_driverController));
   }
 
   /**
@@ -91,5 +96,29 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return Autos.exampleAuto(m_exampleSubsystem);
+  }
+
+  public MotorControllerGroup getLeftMotors(){
+    return leftDriveMotors;
+  }
+
+  public MotorControllerGroup getRightMotors(){
+    return rightDriveMotors;
+  }
+
+  public CANSparkMax getLeftMotor(){
+    return leftDriveMotor;
+  }
+
+  public CANSparkMax getLeftMotorOther(){
+    return leftDriveMotorOther;
+  }
+
+  public CANSparkMax getRightMotor(){
+    return rightDriveMotor;
+  }
+
+  public CANSparkMax getRightMotorOther(){
+    return rightDriveMotorOther;
   }
 }

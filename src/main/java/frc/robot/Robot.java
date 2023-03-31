@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -19,6 +22,11 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private CANSparkMax m_leftMotor;
+  private CANSparkMax m_leftMotorOther;
+  private CANSparkMax m_rightMotor;
+  private CANSparkMax m_rightMotorOther;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +36,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_leftMotor = m_robotContainer.getLeftMotor();
+    m_leftMotorOther = m_robotContainer.getLeftMotorOther();
+    m_rightMotor = m_robotContainer.getRightMotor();
+    m_rightMotorOther = m_robotContainer.getRightMotorOther();
   }
 
   /**
@@ -81,7 +93,12 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    SmartDashboard.putNumber("Left Motor Speed:", m_leftMotor.get());
+    SmartDashboard.putNumber("Left Motor Other Speed", m_leftMotorOther.get());
+    SmartDashboard.putNumber("right Motor Speed:", m_rightMotor.get());
+    SmartDashboard.putNumber("Right motor speed other:", m_rightMotorOther.get());
+  }
 
   @Override
   public void testInit() {

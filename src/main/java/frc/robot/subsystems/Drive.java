@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -19,5 +20,9 @@ public class Drive extends SubsystemBase {
 
   public void drive(double frontBack, double leftRight){
     diffDrive.arcadeDrive(frontBack * Constants.DriveTrain.SPEED_CONTROL,leftRight * Constants.DriveTrain.SPEED_CONTROL);
+  }
+
+  public void sotaTankDrive(double leftStick, double rightStick){
+    diffDrive.tankDrive(leftStick, rightStick);
   }
 }
