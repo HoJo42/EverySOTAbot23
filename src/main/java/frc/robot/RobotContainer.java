@@ -19,6 +19,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Intake;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -48,10 +49,10 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     //TODO: Change the Type of these variables to whatever motor controller you're using
-    CANSparkMax leftDriveMotor = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
-    CANSparkMax leftDriveMotorOther = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
-    CANSparkMax rightDriveMotor = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
-    CANSparkMax rightDriveMotorOther = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
+    WPI_TalonSRX leftDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT);
+    WPI_TalonSRX leftDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER);
+    WPI_TalonSRX rightDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT);
+    WPI_TalonSRX rightDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER);
 
     MotorControllerGroup leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
     MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
