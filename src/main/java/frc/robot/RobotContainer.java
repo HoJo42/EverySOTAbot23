@@ -36,6 +36,7 @@ public class RobotContainer {
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem(); 
   
+<<<<<<< HEAD
   private CANSparkMax leftDriveMotor = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
   private CANSparkMax leftDriveMotorOther = new CANSparkMax(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER, Constants.DriveTrain.MOTOR_TYPE);
   private CANSparkMax rightDriveMotor = new CANSparkMax(Constants.DriveTrain.RIGHT_MOTOR_PORT, Constants.DriveTrain.MOTOR_TYPE);
@@ -62,6 +63,32 @@ public class RobotContainer {
     leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
     rightDriveMotors.setInverted(true);
     m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
+=======
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  private Drive m_Drive;
+  private Arm m_Arm;
+  private Intake m_Intake;
+
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  public RobotContainer() {
+    WPI_TalonSRX leftDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT);
+    WPI_TalonSRX leftDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.LEFT_MOTOR_PORT_OTHER);
+    WPI_TalonSRX rightDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT);
+    WPI_TalonSRX rightDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER);
+
+    MotorControllerGroup leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
+    MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
+
+    CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
+    CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
+    
+    m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
+    m_Arm = new Arm(arm);
+    m_Intake = new Intake(intake);
+    
+>>>>>>> 4a35b0e (made motor init less goofy)
     configureBindings();
     ConfigureDefaultCommands();
   }
