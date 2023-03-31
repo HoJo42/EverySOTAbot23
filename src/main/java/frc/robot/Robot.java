@@ -36,10 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_leftMotor = m_robotContainer.getLeftMotor();
-    m_leftMotorOther = m_robotContainer.getLeftMotorOther();
-    m_rightMotor = m_robotContainer.getRightMotor();
-    m_rightMotorOther = m_robotContainer.getRightMotorOther();
+    
   }
 
   /**
@@ -94,10 +91,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("Left Motor Speed:", m_leftMotor.get());
-    SmartDashboard.putNumber("Left Motor Other Speed", m_leftMotorOther.get());
-    SmartDashboard.putNumber("right Motor Speed:", m_rightMotor.get());
-    SmartDashboard.putNumber("Right motor speed other:", m_rightMotorOther.get());
+    
   }
 
   @Override
