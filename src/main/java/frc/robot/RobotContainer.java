@@ -78,8 +78,12 @@ public class RobotContainer {
     WPI_TalonSRX rightDriveMotor = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT);
     WPI_TalonSRX rightDriveMotorOther = new WPI_TalonSRX(Constants.DriveTrain.RIGHT_MOTOR_PORT_OTHER);
 
+    leftDriveMotor.setInverted(false);
+
     MotorControllerGroup leftDriveMotors = new MotorControllerGroup(leftDriveMotor, leftDriveMotorOther);
     MotorControllerGroup rightDriveMotors = new MotorControllerGroup(rightDriveMotor, rightDriveMotorOther);
+
+    rightDriveMotors.setInverted(true);
 
     CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
     CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
