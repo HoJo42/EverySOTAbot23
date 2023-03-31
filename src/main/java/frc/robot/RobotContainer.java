@@ -10,6 +10,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.LeaveCommunity;
 import frc.robot.commands.ControlIntake;
 import frc.robot.commands.moveArm;
 import frc.robot.subsystems.Arm;
@@ -97,7 +98,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return new LeaveCommunity(m_Drive);
   }
 
   
