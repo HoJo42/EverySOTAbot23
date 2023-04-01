@@ -58,8 +58,8 @@ public class RobotContainer {
 
     rightDriveMotors.setInverted(true);
 
-    CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
-    CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
+    // CANSparkMax arm = new CANSparkMax(Constants.Arm.ARM_MOTOR_PORT, MotorType.kBrushless);
+    // CANSparkMax intake = new CANSparkMax(Constants.Intake.INTAKE_MOTOR_PORT, MotorType.kBrushless);
     
     m_Drive = new Drive(leftDriveMotors, rightDriveMotors);
     // m_Arm = new Arm(arm);
